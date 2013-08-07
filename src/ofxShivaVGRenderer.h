@@ -41,9 +41,11 @@ class ofxShivaVGRenderer : public ofGLRenderer
     	void drawLine(float x1, float y1, float z1, float x2, float y2, float z2);
     	void setLineCapStyle(VGCapStyle cap);
     	void setLineJoinStyle(VGJoinStyle join);
-	    VGCapStyle getLineCapStyle();
+        void setFillMode(ofFillFlag fill);
+        VGCapStyle getLineCapStyle();
 	    VGJoinStyle getLineJoinStyle();
-    
+        ofFillFlag getFillMode();
+
         bool rendersPathPrimitives()
     	{
             return true;
@@ -54,6 +56,7 @@ class ofxShivaVGRenderer : public ofGLRenderer
 	    simpleVGContext _vg;
         deque<ofPoint> _curvePoints;
 	    ofFloatColor _bgColor;
+        ofFillFlag _fill;
     
     	void _draw(ofSubPath &path, simpleVGPath &toPath);
     

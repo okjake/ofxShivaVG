@@ -29,6 +29,7 @@
 ofxShivaVGRenderer::ofxShivaVGRenderer ()
 {
    	_vg.create(ofGetWidth(), ofGetHeight());
+    _fill = OF_FILLED;
 }
 
 void ofxShivaVGRenderer::setLineCapStyle(VGCapStyle cap)
@@ -93,9 +94,7 @@ void ofxShivaVGRenderer::draw(ofPolyline & poly)
 void ofxShivaVGRenderer::draw(ofPath &path)
 {
     ofStyle style = ofGetStyle();
-    
-    // TODO: fill or stroke?
-    
+        
 	vector<ofSubPath> & paths = path.getSubPaths();
     
     simpleVGPath p;
@@ -109,7 +108,6 @@ void ofxShivaVGRenderer::draw(ofPath &path)
 	if(path.getUseShapeColor()) prevColor = style.color;
     
     ofColor c = style.color;
-    
     
     if (path.isFilled())
     {
@@ -224,9 +222,6 @@ void ofxShivaVGRenderer::drawCircle(float x, float y, float z, float radius)
 
 void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, float height)
 {
-    ofColor c = ofGetStyle().color;
-    _vg.setFillColor(c.r, c.g, c.b, c.a);
-    
     simpleVGPath p;
     p.ellipse(x, y, width, height);
     
@@ -236,7 +231,19 @@ void ofxShivaVGRenderer::drawEllipse(float x, float y, float z, float width, flo
         translate(0, 0, z);
     }
     
-    _vg.fillPath(p);
+    ofColor c = ofGetStyle().color;
+    
+    if (_fill == OF_FILLED)
+    {
+        _vg.setFillColor(c.r, c.g, c.b, c.a);
+        _vg.fillPath(p);
+    }
+    else
+    {
+        _vg.setStrokeColor(c.r, c.g, c.b, c.a);
+        _vg.strokePath(p);
+    }
+    
     
     if (z != 0.0f)
     {
@@ -258,3 +265,12 @@ void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float 
     
     _vg.strokePath(p);
 }
+
+void ofxShivaVGRenderer::setFillMode(ofFillFlag fill) {
+    _fill = fill;
+}
+
+ofFillFlag ofxShivaVGRenderer::getFillMode() {
+    return _fill;
+}
+
