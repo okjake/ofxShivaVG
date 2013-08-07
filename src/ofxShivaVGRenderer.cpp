@@ -266,6 +266,42 @@ void ofxShivaVGRenderer::drawLine(float x1, float y1, float z1, float x2, float 
     _vg.strokePath(p);
 }
 
+void ofxShivaVGRenderer::drawRectangle(float x, float y, float z, float w, float h)
+{
+    ofStyle style = ofGetStyle();
+    _vg.setStrokeWidth(style.lineWidth);
+    ofColor c = style.color;
+
+    simpleVGPath p;
+   	if (ofGetStyle().rectMode == OF_RECTMODE_CORNER)
+    {
+        p.moveTo(x,   y);
+        p.lineTo(x+w, y);
+        p.lineTo(x+w, y+h);
+        p.lineTo(x,   y+h);
+    }
+    else
+    {
+        p.moveTo(x-w/2.0f, y-h/2.0f);
+        p.lineTo(x+w/2.0f, y-h/2.0f);
+        p.lineTo(x+w/2.0f, y+h/2.0f);
+        p.lineTo(x-w/2.0f, y+h/2.0f);
+    }
+    
+    if (_fill == OF_FILLED)
+    {
+        _vg.setFillColor(c.r, c.g, c.b, c.a);
+        _vg.fillPath(p);
+    }
+    else
+    {
+        _vg.setStrokeColor(c.r, c.g, c.b, c.a);
+        _vg.strokePath(p);
+    }
+    
+}
+
+
 void ofxShivaVGRenderer::setFillMode(ofFillFlag fill) {
     _fill = fill;
 }

@@ -36,6 +36,7 @@ class ofxShivaVGRenderer : public ofGLRenderer
 	    void background(const ofColor & c);
 	    void draw(ofPolyline & poly);
 	    void draw(ofPath &path);
+        void drawRectangle(float x, float y, float z, float w, float h);
     	void drawCircle(float x, float y, float z,  float radius);
     	void drawEllipse(float x, float y, float z, float width, float height);
     	void drawLine(float x1, float y1, float z1, float x2, float y2, float z2);
